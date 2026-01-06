@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial - Meu Famoso Favorito</title>
+    <meta name="description" content="O Ecossistema de Entretenimento de Alta Conversão. Proposta Comercial Oficial.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Configuração de Cores da Marca */
+        :root {
+            --brand-purple: #8F51E2;
+            --brand-yellow: #FFBC59;
+            --brand-bg: #0f172a; /* Slate 900 */
+            --brand-dark: #020617; /* Slate 950 */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--brand-dark);
+            color: #f8fafc;
+        }
+        
+        h1, h2, h3, .stat-number, .tab-btn {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* Gradiente da Marca */
+        .gradient-text {
+            background: linear-gradient(to right, #8F51E2, #ec4899, #FFBC59);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-border {
+            position: relative;
+            background: #1e293b;
+            background-clip: padding-box;
+            border: 2px solid transparent;
+            border-radius: 1rem;
+        }
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            margin: -2px;
+            border-radius: inherit;
+            background: linear-gradient(to right, #8F51E2, #FFBC59);
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(143, 81, 226, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(143, 81, 226, 0.05) 1px, transparent 1px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+        body.modal-active {
+            overflow: hidden !important; /* Trava o scroll do fundo */
+        }
+
+        /* Tabs Active State */
+        #tab-insta.active {
+            background-color: rgba(236, 72, 153, 0.1); 
+            border-color: #ec4899;
+        }
+        #tab-tiktok.active {
+            background-color: rgba(45, 212, 191, 0.1); 
+            border-color: #00f2ea;
+        }
+        #tab-yt.active {
+            background-color: rgba(220, 38, 38, 0.1); 
+            border-color: #dc2626;
+        }
+
+        /* Cursor Pointer */
+        .clickable-stat {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .clickable-stat:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Persona Card Style Moderno */
+        .persona-card-modern {
+            background: #1e293b;
+            border-radius: 1.5rem;
+            border: 1px solid #334155;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; 
+            display: flex;
+            flex-direction: column;
+        }
+        .persona-card-modern:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.3);
+            border-color: #8F51E2;
+        }
+        .persona-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 1rem;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .persona-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            border: 2px solid;
+            background-color: #0f172a;
+            flex-shrink: 0;
+        }
+        .persona-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .persona-tag {
+            font-size: 0.65rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .persona-badge {
+             font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 99px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        /* Gender Bar Styles */
+        .gender-bar-container {
+            background: #0f172a;
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid #334155;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Vitrine VIP Tags */
+        .vip-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            white-space: nowrap;
+            transition: all 0.3s;
+            display: inline-block;
+            margin: 4px;
+        }
+        .vip-tag:hover {
+            background: #8F51E2;
+            color: white;
+            border-color: #8F51E2;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(143, 81, 226, 0.5);
+        }
+
+        /* CARD DE PLANO PREMIUM */
+        .plan-card {
+            background-color: #1e293b;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #334155;
+        }
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .plan-card.featured {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid #FFBC59;
+            box-shadow: 0 0 30px rgba(255, 188, 89, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-white/5 shadow-lg">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <!-- LOGO -->
+            <div class="flex items-center">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjr6mtVRXW53d-y4irEv7LL8sR2SRKLA0r1JKUlqviCqgx_lUZ4wlIsl4L0521kluUI7M4QtHjsUQlH7YMqNIqPYPmVWFQOKincmwsE-Hznqs5p-U3ZfOZhKr0UFqOMLWGUELoupTpw2QCUGBlDD-G46sP-RYJ35a1nH6Dx5WvTkskH_pTkAuqLImGc0Hk/s320/LOGO%20MEU%20FAMOSO%20FAVORITO.png" 
+                     alt="Meu Famoso Favorito Logo" 
+                     class="h-12 md:h-16 object-contain">
+            </div>
+            
+            <div class="hidden md:flex space-x-6 text-sm font-semibold items-center tracking-wide">
+                <a href="#famosos" class="text-slate-300 hover:text-white transition">VITRINE VIP</a>
+                <a href="#audiencia" class="text-slate-300 hover:text-white transition">DADOS</a>
+                <a href="#case" class="hover:text-yellow-400 transition text-[#FFBC59]"><i class="fa-solid fa-bolt mr-1"></i> CASE SEDE</a>
+                <a href="#propostas" class="text-slate-300 hover:text-white transition">PLANOS</a>
+                <a href="https://wa.me/5512982745769" target="_blank" class="bg-[#8F51E2] px-6 py-2 rounded-full text-white hover:bg-purple-600 transition shadow-lg shadow-purple-900/50 flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> Falar com Edu
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <header class="relative pt-36 pb-0 lg:pt-48 lg:pb-0 overflow-hidden bg-grid">
+        <!-- Glow effects -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-[#8F51E2]/10 blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-1/3 h-full bg-[#FFBC59]/10 blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <!-- Conteúdo de Texto -->
+            <div class="max-w-4xl mx-auto text-center">
+                
+                <!-- Tag de 100% Orgânico -->
+                <div class="inline-flex items-center gap-2 bg-green-500/10 text-green-400 font-bold px-4 py-1.5 rounded-full text-xs tracking-widest mb-6 border border-green-500/20 animate-pulse">
+                    <i class="fa-solid fa-check-circle"></i> 100% ALCANCE ORGÂNICO • SEM IMPULSIONAMENTO
+                </div>
+
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight text-white">
+                    Conectando Marcas ao <br>
+                    <span class="gradient-text">Entretenimento Real</span>
+                </h1>
+                
+                <!-- SUBHEADLINE -->
+                <p class="text-xl md:text-2xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
+                    O ecossistema que transforma entretenimento, bastidores e prova social em valor real de marca.
+                </p>
+
+                <!-- RESUMO EXECUTIVO -->
+                <div class="bg-slate-900/80 border border-slate-700/50 rounded-2xl p-6 md:p-8 mb-12 shadow-2xl backdrop-blur-md max-w-5xl mx-auto">
+                    <div class="flex items-center justify-center gap-2 mb-6">
+                         <div class="h-px w-10 bg-slate-700"></div>
+                         <p class="text-xs text-[#FFBC59] font-bold uppercase tracking-widest">RESUMO EXECUTIVO EM 30 SEGUNDOS</p>
+                         <div class="h-px w-10 bg-slate-700"></div>
+                    </div>
+                   
+                   <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-left">
+                       <!-- Bloco 1 -->
+                       <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-[#8F51E2]/50 transition">
+                           <div class="w-10 h-10 rounded-full bg-[#8F51E2]/20 flex items-center justify-center mb-3 text-[#8F51E2]">
+                               <i class="fa-solid fa-bullseye text-lg"></i>
+                           </div>
+                           <h4 class="text-white font-bold text-sm mb-1">O Que É</h4>
+                           <p class="text-xs text-slate-400 leading-snug">Ecossistema de lifestyle com distribuição simultânea em Insta, TikTok e YouTube.</p>
+                       </div>
+
+                       <!-- Bloco 2 -->
+                       <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-[#8F51E2]/50 transition">
+                           <div class="w-10 h-10 rounded-full bg-[#8F51E2]/20 flex items-center justify-center mb-3 text-[#8F51E2]">
+                               <i class="fa-solid fa-users text-lg"></i>
+                           </div>
+                           <h4 class="text-white font-bold text-sm mb-1">Para Quem</h4>
+                           <p class="text-xs text-slate-400 leading-snug">Marcas que buscam associação a entretenimento real, bastidores e prova social.</p>
+                       </div>
+
+                       <!-- Bloco 3 -->
+                       <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-[#8F51E2]/50 transition">
+                           <div class="w-10 h-10 rounded-full bg-[#8F51E2]/20 flex items-center justify-center mb-3 text-[#8F51E2]">
+                               <i class="fa-solid fa-tags text-lg"></i>
+                           </div>
+                           <h4 class="text-white font-bold text-sm mb-1">Investimento</h4>
+                           <p class="text-xs text-slate-400 leading-snug">Planos a partir de <strong class="text-white">R$ 6k</strong>. Exclusividade mensal a partir de <strong class="text-white">R$ 25k</strong>.</p>
+                       </div>
+
+                       <!-- Bloco 4 -->
+                       <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-[#8F51E2]/50 transition">
+                           <div class="w-10 h-10 rounded-full bg-[#8F51E2]/20 flex items-center justify-center mb-3 text-[#8F51E2]">
+                               <i class="fa-solid fa-chart-line text-lg"></i>
+                           </div>
+                           <h4 class="text-white font-bold text-sm mb-1">Resultado</h4>
+                           <p class="text-xs text-slate-400 leading-snug">Amplificação de branding e estímulo ao consumo por contexto.</p>
+                       </div>
+                   </div>
+                </div>
+
+                <!-- BOTÕES DE AÇÃO -->
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#propostas" class="bg-[#8F51E2] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-purple-600 transition shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-contract"></i> Ver Propostas
+                    </a>
+                    <a href="https://wa.me/5512982745769" target="_blank" class="bg-transparent border border-[#FFBC59] text-[#FFBC59] px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#FFBC59] hover:text-black transition flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> Negociar Agora
+                    </a>
+                </div>
+                
+                <!-- Logos das Plataformas -->
+                <div class="mt-12 flex justify-center gap-8 items-center">
+                    <a href="https://www.instagram.com/meufamosofav/" target="_blank" class="text-slate-500 hover:text-pink-500 transition transform hover:scale-110">
+                        <i class="fa-brands fa-instagram text-4xl"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@meufamosofavorito" target="_blank" class="text-slate-500 hover:text-white transition transform hover:scale-110">
+                        <i class="fa-brands fa-tiktok text-4xl"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@Meufamosofav" target="_blank" class="text-slate-500 hover:text-red-600 transition transform hover:scale-110">
+                        <i class="fa-brands fa-youtube text-4xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- IMAGEM DE DESTAQUE (AUMENTADA) -->
+            <div class="mt-16 flex justify-center relative z-20 translate-y-1">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgrGYqEwNZeKF2QlsZK-ESC8tFesS9h1HFK8IUes70QL1l9Pi8r5Wjuep_AQJpMQGzLBuM7hllCdgSUumAIdZpUqrLcoCvYJIEic4ONWZND-P1ttpmlokLKkH1t7TuvzuWBSv8xjV7vMfVdEbcvwbJAdbGjPK0-CfdIcDw35axuS-PTbVF5aAFh6W6edOg/s16000/capa%20meu%20famoso.png" 
+                     alt="Destaque Proposta Comercial" 
+                     class="w-full max-w-7xl h-auto object-contain drop-shadow-2xl hover:scale-105 transition duration-500 block">
+            </div>
+
+        </div>
+    </header>
+
+    <!-- 2. SECTION: A VITRINE DOS FAMOSOS -->
+    <section id="famosos" class="py-20 bg-slate-800 relative overflow-visible">
+        <div class="container mx-auto px-6 relative z-10">
+             <!-- PADRÃO LARGURA: max-w-6xl -->
+             <div class="max-w-6xl mx-auto mb-16 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-3xl p-8 text-center relative overflow-hidden shadow-2xl">
+                <!-- Background Blurs -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-[#FFBC59]/10 rounded-full blur-2xl"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-[#8F51E2]/10 rounded-full blur-2xl"></div>
+                
+                <div class="relative z-10">
+                    <div class="inline-block bg-[#FFBC59] text-black text-xs font-bold px-3 py-1 rounded mb-4">AUTORIDADE MÁXIMA</div>
+                    <h3 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                        A Vitrine VIP: <span class="text-[#FFBC59]">Eles Interagem Aqui</span>
+                    </h3>
+                    <p class="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto mb-8">
+                        Sua marca não atinge apenas o consumidor final. Ela aparece no feed de quem dita as tendências. Grandes celebridades consomem e enviam carinho para nossa página.
+                        <br><span class="text-[#FFBC59] text-xs font-bold mt-2 block">(Toque nos cartões para ver o recado)</span>
+                    </p>
+                    
+                    <!-- GRID DE CARDS VIP -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        
+                        <!-- Card Xuxa -->
+                        <div class="cursor-pointer group" onclick="toggleModal('modal-vip-xuxa')">
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-slate-700 group-hover:border-[#8F51E2] transition transform group-hover:-translate-y-2 shadow-lg h-full flex flex-col items-center justify-center">
+                                <div class="w-16 h-16 rounded-full bg-[#8F51E2]/20 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-crown text-3xl text-yellow-500"></i>
+                                </div>
+                                <h4 class="font-bold text-white mb-1">Xuxa Meneghel</h4>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-widest group-hover:text-[#8F51E2] transition">Ver Vídeo <i class="fa-solid fa-play ml-1"></i></p>
+                            </div>
+                        </div>
+
+                        <!-- Card Bruno -->
+                        <div class="cursor-pointer group" onclick="toggleModal('modal-vip-bruno')">
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-slate-700 group-hover:border-blue-500 transition transform group-hover:-translate-y-2 shadow-lg h-full flex flex-col items-center justify-center">
+                                <div class="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-star text-3xl text-blue-500"></i>
+                                </div>
+                                <h4 class="font-bold text-white mb-1">Bruno Gagliasso</h4>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-widest group-hover:text-blue-500 transition">Ver Vídeo <i class="fa-solid fa-play ml-1"></i></p>
+                            </div>
+                        </div>
+
+                        <!-- Card Virginia -->
+                        <div class="cursor-pointer group" onclick="toggleModal('modal-vip-virginia')">
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-slate-700 group-hover:border-pink-500 transition transform group-hover:-translate-y-2 shadow-lg h-full flex flex-col items-center justify-center">
+                                <div class="w-16 h-16 rounded-full bg-pink-500/20 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-heart text-3xl text-pink-500"></i>
+                                </div>
+                                <h4 class="font-bold text-white mb-1">Virginia Fonseca</h4>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-widest group-hover:text-pink-500 transition">Ver Vídeo <i class="fa-solid fa-play ml-1"></i></p>
+                            </div>
+                        </div>
+
+                        <!-- Card Sandy -->
+                        <div class="cursor-pointer group" onclick="toggleModal('modal-vip-sandy')">
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-slate-700 group-hover:border-[#FFBC59] transition transform group-hover:-translate-y-2 shadow-lg h-full flex flex-col items-center justify-center">
+                                <div class="w-16 h-16 rounded-full bg-[#FFBC59]/20 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-music text-3xl text-[#FFBC59]"></i>
+                                </div>
+                                <h4 class="font-bold text-white mb-1">Sandy</h4>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-widest group-hover:text-[#FFBC59] transition">Ver Vídeo <i class="fa-solid fa-play ml-1"></i></p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- LISTA DE TAGS COMPLEMENTAR -->
+                    <div class="flex flex-wrap justify-center gap-3 mt-8 relative z-20">
+                        <span class="vip-tag">Cauã Reymond</span>
+                        <span class="vip-tag">Thiaguinho</span>
+                        <span class="vip-tag">Eliana</span>
+                        <span class="vip-tag">Sabrina Sato</span>
+                        <span class="vip-tag">Marina Ruy Barbosa</span>
+                        <span class="vip-tag">Claudia Leitte</span>
+                        <span class="vip-tag">Wanessa</span>
+                        <span class="vip-tag">Maiara e Maraisa</span>
+                        <span class="vip-tag">João Gomes</span>
+                        <!-- Lucas Lucco Removido -->
+                        <span class="vip-tag">Deborah Secco</span>
+                        <span class="vip-tag">Larissa Manoela</span>
+                        <span class="vip-tag">Kevinho</span>
+                        <span class="vip-tag">Léo Santana</span>
+                    </div>
+
+                    <!-- IMAGEM EXTRA (FAMOSOS) - SEM ESPAÇOS LATERAIS (URL CORRIGIDA E CÓDIGO VALIDADO) -->
+                    <div class="mt-8 -mx-8 -mb-8 relative z-20">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilvjSPJ5itcSKmahYHXxfJeNFENJ1Ia14vFot3FafwR17DhKrYUc7Do31Y5izvtIpfVNa5zbPSHvzTB1xwkM_KBHXylfwgGV4ZOFgRmaUxxIjE9ntW3svII8VcATwiMVlvO4dZ5QmStoyq3oSdb64y0Jt7tsFJyMEaeaa8kHJr3pmnpEjPJZLIoMxWZmk/s16000/Title%20Page.png" 
+                             alt="Mais famosos" 
+                             class="w-full h-auto rounded-b-3xl">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SECTION: DADOS POR PLATAFORMA + PERSONA SEGMENTADA (ABAS) -->
+    <section id="audiencia" class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="container mx-auto px-6">
+            
+            <!-- PADRONIZAÇÃO DO CABEÇALHO -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 text-[#8F51E2] font-bold mb-4 text-xs tracking-widest bg-[#8F51E2]/10 px-4 py-1.5 rounded-full border border-[#8F51E2]/20 uppercase">
+                    DADOS & INSIGHTS
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                    Escolha o seu <span class="text-[#8F51E2]">Público Alvo</span>
+                </h2>
+                <p class="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto">
+                    Cada plataforma atinge um perfil diferente de consumidor. Selecione um card abaixo para ver os dados detalhados.
+                </p>
+            </div>
+            
+            <!-- Tabs Navigation -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 max-w-6xl mx-auto"> <!-- PADRÃO LARGURA: max-w-6xl -->
+                
+                <!-- Card Instagram -->
+                <div onclick="switchTab('insta')" id="tab-insta" class="tab-btn active cursor-pointer bg-slate-800 rounded-2xl p-8 border border-slate-700 hover:border-pink-500 transition group flex flex-col items-center justify-center text-center shadow-lg hover:-translate-y-1 duration-300 h-full">
+                    <div class="w-16 h-16 rounded-full bg-slate-900/50 flex items-center justify-center mb-4 group-[.active]:bg-white/20 transition">
+                        <i class="fa-brands fa-instagram text-3xl text-pink-500 group-[.active]:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">Instagram</h3>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest group-[.active]:text-slate-200">Lifestyle & Trends</p>
+                </div>
+
+                <!-- Card TikTok -->
+                <div onclick="switchTab('tiktok')" id="tab-tiktok" class="tab-btn cursor-pointer bg-slate-800 rounded-2xl p-8 border border-slate-700 hover:border-[#00f2ea] transition group flex flex-col items-center justify-center text-center shadow-lg hover:-translate-y-1 duration-300 h-full">
+                    <div class="w-16 h-16 rounded-full bg-slate-900/50 flex items-center justify-center mb-4 group-[.active]:bg-white/20 transition">
+                        <i class="fa-brands fa-tiktok text-3xl text-[#00f2ea] group-[.active]:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">TikTok</h3>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest group-[.active]:text-slate-200">Viral & Alcance</p>
+                </div>
+
+                <!-- Card YouTube -->
+                <div onclick="switchTab('yt')" id="tab-yt" class="tab-btn cursor-pointer bg-slate-800 rounded-2xl p-8 border border-slate-700 hover:border-red-600 transition group flex flex-col items-center justify-center text-center shadow-lg hover:-translate-y-1 duration-300 h-full">
+                    <div class="w-16 h-16 rounded-full bg-slate-900/50 flex items-center justify-center mb-4 group-[.active]:bg-white/20 transition">
+                        <i class="fa-brands fa-youtube text-3xl text-red-600 group-[.active]:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">YouTube</h3>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest group-[.active]:text-slate-200">Retenção & Busca</p>
+                </div>
+
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="content-area" class="max-w-6xl mx-auto"> <!-- PADRÃO LARGURA: max-w-6xl -->
+                
+                <!-- Conteúdo INSTAGRAM -->
+                <div id="content-insta" class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in p-6 rounded-3xl border border-pink-500/20 bg-pink-500/5">
+                    <!-- Esquerda: Dados -->
+                    <div class="bg-slate-800 p-8 rounded-2xl border-l-4 border-pink-500 h-full flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-pink-500 font-bold text-2xl flex items-center"><i class="fa-brands fa-instagram mr-3"></i> Instagram Insights</h3>
+                            <span class="bg-pink-900/30 text-pink-400 text-[10px] font-bold px-2 py-1 rounded border border-pink-500/30">DADOS 30D</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
+                            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center">
+                                <p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Visualizações</p>
+                                <p class="text-white font-bold text-xl">11.1M+</p>
+                            </div>
+                            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center">
+                                <p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Contas Alcançadas</p>
+                                <p class="text-white font-bold text-xl">4.5M+</p>
+                            </div>
+                            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center">
+                                <p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Horário Nobre</p>
+                                <p class="text-[#FFBC59] font-bold text-lg">18h - 21h</p>
+                            </div>
+                             <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center">
+                                <p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Origem Viral</p>
+                                <p class="text-green-400 font-bold text-lg">95.1% Alcance Viral (Novos)</p>
+                            </div>
+                        </div>
+                          
+                          <!-- Destaque Frase -->
+                        <div class="bg-slate-900/30 p-4 rounded-lg border border-slate-700 mb-6 italic text-slate-300 text-center text-sm">
+                            "A vitrine principal. Onde 4.5 milhões de pessoas únicas foram impactadas no último mês."
+                        </div>
+
+                        <!-- Top Cities Visualization -->
+                        <div class="mb-6 flex-grow">
+                            <p class="text-slate-400 text-xs uppercase font-bold mb-3"><i class="fa-solid fa-map-location-dot mr-1"></i> Top Cidades (Brasil)</p>
+                            <div class="space-y-3">
+                                <div><div class="flex justify-between text-xs text-slate-300 mb-1"><span>São Paulo (SP)</span> <span class="font-bold">8.0%</span></div><div class="w-full bg-slate-700 h-1.5 rounded-full"><div class="bg-pink-500 h-1.5 rounded-full" style="width: 80%"></div></div></div>
+                                <div><div class="flex justify-between text-xs text-slate-300 mb-1"><span>Rio de Janeiro (RJ)</span> <span class="font-bold">4.0%</span></div><div class="w-full bg-slate-700 h-1.5 rounded-full"><div class="bg-pink-500 h-1.5 rounded-full" style="width: 40%"></div></div></div>
+                                <div><div class="flex justify-between text-xs text-slate-300 mb-1"><span>Fortaleza (CE)</span> <span class="font-bold">1.8%</span></div><div class="w-full bg-slate-700 h-1.5 rounded-full"><div class="bg-pink-500 h-1.5 rounded-full" style="width: 18%"></div></div></div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/30 p-3 rounded-lg border border-slate-700 mb-4 text-center">
+                            <p class="text-slate-400 text-[10px] uppercase font-bold mb-2">Alcance Internacional</p>
+                            <div class="flex justify-center gap-6">
+                                <div class="text-center"><span class="text-2xl block">🇧🇷</span><span class="text-[9px] text-slate-500">Brasil</span></div>
+                                <div class="text-center"><span class="text-2xl block">🇺🇸</span><span class="text-[9px] text-slate-500">EUA</span></div>
+                                <div class="text-center"><span class="text-2xl block">🇵🇹</span><span class="text-[9px] text-slate-500">Portugal</span></div>
+                            </div>
+                        </div>
+                        <button onclick="toggleModal('modal-insta')" class="w-full bg-slate-700 hover:bg-slate-600 text-white py-3 rounded text-sm transition font-bold border border-slate-600 uppercase flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-circle-check"></i> Validar Dados Oficiais
+                        </button>
+                    </div>
+
+                    <!-- Direita: Personas Instagram (Padronizado) -->
+                    <div class="flex flex-col gap-4 h-full">
+                         <!-- Barra Gênero -->
+                         <div class="gender-bar-container">
+                            <div class="flex justify-between text-xs font-bold mb-2 uppercase tracking-wide">
+                                <span class="text-pink-400"><i class="fa-solid fa-venus mr-1"></i> 72% Mulheres</span>
+                                <span class="text-blue-400">28% Homens <i class="fa-solid fa-mars ml-1"></i></span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-4 overflow-hidden flex shadow-inner">
+                                <div class="bg-pink-500 h-full flex items-center justify-center text-[9px] font-bold text-white shadow-md z-10" style="width: 72%">FEM</div>
+                                <div class="bg-blue-500 h-full flex items-center justify-center text-[9px] font-bold text-white shadow-md" style="width: 28%">MASC</div>
+                            </div>
+                        </div>
+
+                        <!-- Persona Carla -->
+                        <div class="persona-card-modern">
+                            <div class="persona-header bg-gradient-to-r from-pink-900/40 to-slate-900">
+                                <div class="persona-avatar border-pink-500 text-pink-500"><i class="fa-solid fa-user-check"></i></div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2"><h4 class="text-lg font-bold text-white">Carla, 36 anos</h4><span class="persona-badge bg-pink-500 text-white">72%</span></div>
+                                    <p class="text-slate-400 text-xs uppercase tracking-wider">A Antenada</p>
+                                </div>
+                            </div>
+                            <div class="persona-body">
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">Moradora de capitais (SP/RJ). Experiente, trabalha e decide as compras da casa. Ama saber dos famosos em primeira mão para comentar nos grupos.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="persona-tag bg-pink-900/30 text-pink-400 border border-pink-900/50">Reality Shows</span>
+                                    <span class="persona-tag bg-purple-900/30 text-purple-400 border border-purple-900/50">Moda Acessível</span>
+                                    <span class="persona-tag bg-orange-900/30 text-orange-400 border border-orange-900/50">Viagens</span>
+                                </div>
+                                <div class="mt-auto p-3 bg-slate-800 rounded border border-slate-700">
+                                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1"><i class="fa-solid fa-cart-shopping mr-1 text-pink-500"></i> Gatilho de Compra:</p>
+                                    <p class="text-xs text-white">Decisora de compra da casa. Compra por indicação de confiança e "prova social".</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Persona Bruno (Padronizado) -->
+                         <div class="persona-card-modern">
+                            <div class="persona-header bg-gradient-to-r from-blue-900/40 to-slate-900">
+                                <div class="persona-avatar border-blue-500 text-blue-500"><i class="fa-solid fa-user-tie"></i></div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2"><h4 class="text-lg font-bold text-white">Bruno, 34 anos</h4><span class="persona-badge bg-blue-500 text-white">28%</span></div>
+                                    <p class="text-slate-400 text-xs uppercase tracking-wider">O Explorador</p>
+                                </div>
+                            </div>
+                            <div class="persona-body">
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">Solteiro/Namorando, mora em grandes centros. Usa o Insta para entretenimento rápido e visual.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="persona-tag bg-blue-900/30 text-blue-400 border border-blue-900/50">Carros</span>
+                                    <span class="persona-tag bg-green-900/30 text-green-400 border border-green-900/50">Festas</span>
+                                    <span class="persona-tag bg-teal-900/30 text-teal-400 border border-teal-900/50">Humor</span>
+                                </div>
+                                <div class="mt-auto p-3 bg-slate-800 rounded border border-slate-700">
+                                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1"><i class="fa-solid fa-wallet mr-1 text-blue-500"></i> Potencial de Compra:</p>
+                                    <p class="text-xs text-white">Consome por impulso e status. Aberto a bebidas, eventos e tecnologia.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conteúdo TIKTOK -->
+                <div id="content-tiktok" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in p-6 rounded-3xl border border-[#00f2ea]/20 bg-[#00f2ea]/5">
+                      <!-- Esquerda: Dados -->
+                    <div class="bg-slate-800 p-8 rounded-2xl border-l-4 border-[#00f2ea] h-full flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-[#00f2ea] font-bold text-2xl flex items-center"><i class="fa-brands fa-tiktok mr-3"></i> TikTok Insights</h3>
+                            <span class="bg-teal-900/30 text-[#00f2ea] text-[10px] font-bold px-2 py-1 rounded border border-teal-500/30">DADOS 28D</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
+                            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center"><p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Visualizações</p><p class="text-white font-bold text-xl">2.4M+</p></div>
+                            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center"><p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Espectadores</p><p class="text-white font-bold text-xl">1.7M</p></div>
+                            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center"><p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Público Adulto</p><p class="text-[#FFBC59] font-bold text-lg">61% (25-44)</p></div>
+                             <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center"><p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Engajamento</p><p class="text-white font-bold text-lg">Alto</p></div>
+                        </div>
+
+                          <!-- FRASE ESTRATÉGICA TIKTOK -->
+                        <div class="bg-slate-900/30 p-4 rounded-lg border border-slate-700 mb-6 italic text-slate-300 text-center text-sm">
+                            "Público qualificado: Diferente da média do TikTok, nossa base é adulta e trabalhadora (+60% acima de 25 anos)."
+                        </div>
+
+                          <div class="mb-6 flex-grow">
+                            <p class="text-slate-400 text-xs uppercase font-bold mb-3"><i class="fa-solid fa-map-pin mr-1"></i> Top Cidades</p>
+                            <div class="space-y-3">
+                                <div><div class="flex justify-between text-xs text-slate-300 mb-1"><span>São Paulo</span> <span class="font-bold">13.8%</span></div><div class="w-full bg-slate-700 h-1.5 rounded-full"><div class="bg-[#00f2ea] h-1.5 rounded-full" style="width: 80%"></div></div></div>
+                                <div><div class="flex justify-between text-xs text-slate-300 mb-1"><span>Rio de Janeiro</span> <span class="font-bold">7.2%</span></div><div class="w-full bg-slate-700 h-1.5 rounded-full"><div class="bg-[#00f2ea] h-1.5 rounded-full" style="width: 40%"></div></div></div>
+                                 <div><div class="flex justify-between text-xs text-slate-300 mb-1"><span>Lisboa (Portugal)</span> <span class="font-bold text-red-400">Destaque</span></div><div class="w-full bg-slate-700 h-1.5 rounded-full"><div class="bg-red-500 h-1.5 rounded-full" style="width: 30%"></div></div></div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/30 p-3 rounded-lg border border-slate-700 mb-4 text-center">
+                            <p class="text-slate-400 text-[10px] uppercase font-bold mb-2">Alcance Internacional</p>
+                            <div class="flex justify-center gap-4 text-2xl"><span title="Brasil">🇧🇷</span><span title="Portugal">🇵🇹</span><span title="EUA">🇺🇸</span></div>
+                        </div>
+                          <button onclick="toggleModal('modal-tiktok')" class="w-full mt-auto bg-slate-700 hover:bg-slate-600 text-white py-3 rounded text-sm transition font-bold border border-slate-600 uppercase flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-circle-check"></i> Validar Dados Oficiais
+                        </button>
+                    </div>
+
+                    <!-- Direita: Personas TikTok (Padronizado) -->
+                    <div class="flex flex-col gap-4 h-full">
+                         <!-- Barra Gênero -->
+                        <div class="gender-bar-container">
+                            <div class="flex justify-between text-xs font-bold mb-2 uppercase tracking-wide">
+                                <span class="text-pink-400"><i class="fa-solid fa-venus mr-1"></i> 58% Mulheres</span>
+                                <span class="text-blue-400">41% Homens <i class="fa-solid fa-mars ml-1"></i></span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-4 overflow-hidden flex shadow-inner">
+                                <div class="bg-pink-500 h-full flex items-center justify-center text-[9px] font-bold text-white shadow-md z-10" style="width: 58%">FEM</div>
+                                <div class="bg-blue-500 h-full flex items-center justify-center text-[9px] font-bold text-white shadow-md" style="width: 41%">MASC</div>
+                            </div>
+                        </div>
+
+                         <!-- Persona A Criadora -->
+                        <div class="persona-card-modern">
+                            <div class="persona-header bg-gradient-to-r from-teal-900/40 to-slate-900">
+                                <div class="persona-avatar border-[#00f2ea] text-[#00f2ea]"><i class="fa-solid fa-music"></i></div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2"><h4 class="text-lg font-bold text-white">A Criadora</h4><span class="persona-badge bg-[#00f2ea] text-black">58%</span></div>
+                                    <p class="text-slate-400 text-xs uppercase tracking-wider">Perfil TikTok</p>
+                                </div>
+                            </div>
+                            <div class="persona-body">
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">Engajada em challenges e dublagens. Produz conteúdo (UGC) e replica trends das marcas. Potencial viral altíssimo.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="persona-tag bg-pink-900/30 text-pink-400 border border-pink-900/50">Viral</span>
+                                    <span class="persona-tag bg-purple-900/30 text-purple-400 border border-purple-900/50">Música</span>
+                                    <span class="persona-tag bg-teal-900/30 text-[#00f2ea] border border-teal-900/50">Humor</span>
+                                </div>
+                                <div class="mt-auto p-3 bg-slate-800 rounded border border-slate-700">
+                                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1"><i class="fa-solid fa-bolt mr-1 text-[#00f2ea]"></i> Foco:</p>
+                                    <p class="text-xs text-white">Brand Awareness e Descoberta de Novos Produtos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Persona O Observador (Padronizado) -->
+                        <div class="persona-card-modern">
+                            <div class="persona-header bg-gradient-to-r from-blue-900/40 to-slate-900">
+                                <div class="persona-avatar border-blue-500 text-blue-500"><i class="fa-solid fa-face-grin-squint"></i></div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2"><h4 class="text-lg font-bold text-white">O Observador</h4><span class="persona-badge bg-blue-500 text-white">41%</span></div>
+                                    <p class="text-slate-400 text-xs uppercase tracking-wider">Perfil TikTok</p>
+                                </div>
+                            </div>
+                            <div class="persona-body">
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">Busca humor rápido e entretenimento passivo. Aberto a descobrir novas marcas de forma leve e descontraída.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="persona-tag bg-blue-900/30 text-blue-400 border border-blue-900/50">Humor</span>
+                                    <span class="persona-tag bg-teal-900/30 text-teal-400 border border-teal-900/50">Hacks</span>
+                                    <span class="persona-tag bg-gray-700 text-gray-300 border border-gray-600">Curiosidades</span>
+                                </div>
+                                 <div class="mt-auto p-3 bg-slate-800 rounded border border-slate-700">
+                                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1"><i class="fa-solid fa-eye mr-1 text-blue-500"></i> Foco:</p>
+                                    <p class="text-xs text-white">Consumo rápido e entretenimento visual.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Conteúdo YOUTUBE (Dados + Persona Dupla) -->
+                <div id="content-yt" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in p-6 rounded-3xl border border-red-600/20 bg-red-600/5">
+                    <!-- Esquerda: Dados -->
+                    <div class="bg-slate-800 p-8 rounded-2xl border-l-4 border-red-600 h-full flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-red-600 font-bold text-2xl flex items-center"><i class="fa-brands fa-youtube mr-3"></i> YouTube (28 Dias)</h3>
+                            <span class="bg-red-900/30 text-red-400 text-[10px] font-bold px-2 py-1 rounded border border-red-500/30">DADOS OFICIAIS</span>
+                        </div>
+                         <div class="grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
+                            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center"><p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Visualizações</p><p class="text-white font-bold text-xl">3.5M+</p></div>
+                            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center"><p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Tempo de Exibição</p><p class="text-white font-bold text-xl">13.4k h</p></div>
+                            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center"><p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Core Target</p><p class="text-[#FFBC59] font-bold text-lg">35-54 Anos</p></div>
+                             <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 text-center"><p class="text-slate-400 text-[10px] uppercase font-bold mb-1">Dispositivo</p><p class="text-white font-bold text-lg">85% Mobile</p></div>
+                        </div>
+
+                         <!-- FRASE ESTRATÉGICA YOUTUBE -->
+                        <div class="bg-slate-900/30 p-4 rounded-lg border border-slate-700 mb-6 italic text-slate-300 text-center text-sm">
+                            "Retenção de Ouro: Onde o público dedica tempo real. Ideal para vídeos mais longos ou inserções explicativas."
+                        </div>
+
+                         <div class="mb-6 flex-grow">
+                            <p class="text-slate-400 text-xs uppercase font-bold mb-3"><i class="fa-solid fa-earth-americas mr-1"></i> Principais Países</p>
+                            <div class="space-y-3">
+                                <div><div class="flex justify-between text-xs text-slate-300 mb-1"><span>Brasil</span> <span class="font-bold">92.5%</span></div><div class="w-full bg-slate-700 h-1.5 rounded-full"><div class="bg-red-600 h-1.5 rounded-full" style="width: 92%"></div></div></div>
+                                <div><div class="flex justify-between text-xs text-slate-300 mb-1"><span>Portugal</span> <span class="font-bold">1.3%</span></div><div class="w-full bg-slate-700 h-1.5 rounded-full"><div class="bg-green-600 h-1.5 rounded-full" style="width: 5%"></div></div></div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/30 p-3 rounded-lg border border-slate-700 mb-4 text-center">
+                            <p class="text-slate-400 text-[10px] uppercase font-bold mb-2">Alcance Internacional</p>
+                            <div class="flex justify-center gap-6">
+                                <div class="text-center"><span class="text-2xl block">🇧🇷</span><span class="text-[9px] text-slate-500">Brasil</span></div>
+                                <div class="text-center"><span class="text-2xl block">🇵🇹</span><span class="text-[9px] text-slate-500">Portugal</span></div>
+                                <div class="text-center"><span class="text-2xl block">🇺🇸</span><span class="text-[9px] text-slate-500">EUA</span></div>
+                            </div>
+                        </div>
+                         <button onclick="toggleModal('modal-yt')" class="w-full mt-auto bg-slate-700 hover:bg-slate-600 text-white py-3 rounded text-sm transition font-bold border border-slate-600 uppercase flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-circle-check"></i> Validar Dados Oficiais
+                        </button>
+                    </div>
+
+                    <!-- Direita: Personas YouTube (Padronizado) -->
+                    <div class="flex flex-col gap-4 h-full">
+                         <!-- Barra Gênero -->
+                        <div class="gender-bar-container">
+                            <div class="flex justify-between text-xs font-bold mb-2 uppercase tracking-wide">
+                                <span class="text-blue-400"><i class="fa-solid fa-mars mr-1"></i> 63.5% Homens</span>
+                                <span class="text-pink-400">36.5% Mulheres <i class="fa-solid fa-venus ml-1"></i></span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-4 overflow-hidden flex shadow-inner">
+                                <div class="bg-blue-500 h-full flex items-center justify-center text-[9px] font-bold text-white shadow-md z-10" style="width: 63.5%">MASC</div>
+                                <div class="bg-pink-500 h-full flex items-center justify-center text-[9px] font-bold text-white shadow-md" style="width: 36.5%">FEM</div>
+                            </div>
+                        </div>
+
+                         <!-- Persona O Decisor -->
+                        <div class="persona-card-modern">
+                            <div class="persona-header bg-gradient-to-r from-red-900/40 to-slate-900">
+                                <div class="persona-avatar border-red-600 text-red-600"><i class="fa-solid fa-user-check"></i></div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2"><h4 class="text-lg font-bold text-white">O Decisor</h4><span class="persona-badge bg-red-600 text-white">63%</span></div>
+                                    <p class="text-slate-400 text-xs uppercase tracking-wider">Perfil YouTube</p>
+                                </div>
+                            </div>
+                            <div class="persona-body">
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">Maduro, estável financeiramente. Pesquisa sobre carros, manutenção e notícias. Tem maior ticket médio.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="persona-tag bg-red-900/30 text-red-400 border border-red-900/50">Carros</span>
+                                    <span class="persona-tag bg-blue-900/30 text-blue-400 border border-blue-900/50">Tech</span>
+                                    <span class="persona-tag bg-gray-700 text-gray-300 border border-gray-600">Notícias</span>
+                                </div>
+                                 <div class="mt-auto p-3 bg-slate-800 rounded border border-slate-700">
+                                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1"><i class="fa-solid fa-bullseye mr-1 text-red-600"></i> Foco:</p>
+                                    <p class="text-xs text-white">Conversão e Explicação de Produto (Vídeos Longos).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- Persona A Fiel -->
+                        <div class="persona-card-modern">
+                            <div class="persona-header bg-gradient-to-r from-purple-900/40 to-slate-900">
+                                <div class="persona-avatar border-purple-500 text-purple-500"><i class="fa-solid fa-tv"></i></div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2"><h4 class="text-lg font-bold text-white">A Fiel</h4><span class="persona-badge bg-purple-500 text-white">36%</span></div>
+                                    <p class="text-slate-400 text-xs uppercase tracking-wider">Perfil YouTube</p>
+                                </div>
+                            </div>
+                            <div class="persona-body">
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">Consome conteúdo longo. Busca profundidade sobre a vida das celebridades e dicas de lifestyle.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="persona-tag bg-purple-900/30 text-purple-400 border border-purple-900/50">Vlogs</span>
+                                    <span class="persona-tag bg-orange-900/30 text-orange-400 border border-orange-900/50">Entrevistas</span>
+                                    <span class="persona-tag bg-pink-900/30 text-pink-400 border border-pink-900/50">Dicas</span>
+                                </div>
+                                <div class="mt-auto p-3 bg-slate-800 rounded border border-slate-700">
+                                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1"><i class="fa-solid fa-heart mr-1 text-purple-500"></i> Foco:</p>
+                                    <p class="text-xs text-white">Fidelização e Storytelling Profundo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CASE STUDY SECTION - "A CAIXINHA" ORGANIZADA (PADRONIZADO) -->
+    <section id="case" class="py-20 bg-[#0B1120] relative overflow-hidden border-y border-purple-900/20">
+        <div class="container mx-auto px-6 relative z-10">
+            
+            <!-- PADRONIZAÇÃO DO CABEÇALHO -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 text-[#FFBC59] font-bold mb-4 text-xs tracking-widest bg-[#FFBC59]/10 px-4 py-1.5 rounded-full border border-[#FFBC59]/20 uppercase">
+                    <i class="fa-solid fa-trophy"></i> CASE DE SUCESSO
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                    Potencializando o <span class="block text-[#8F51E2]">Branding Orgânico</span> da Marca
+                </h2>
+                <p class="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto">
+                     Nossa página atua como uma extensão estratégica da marca, amplificando o alcance e gerando identificação genuína. Ao divulgar os bastidores e o lifestyle dos embaixadores, ajudamos a SEDE a crescer organicamente e a fortalecer sua presença digital com alto engajamento.
+                </p>
+            </div>
+
+            <!-- "Caixinha" Principal do Case (Com fundo Roxo Escuro) -->
+            <div class="max-w-6xl mx-auto bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] border border-[#8F51E2]/30 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
+                
+                <!-- Elementos Decorativos -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8F51E2] via-[#FFBC59] to-[#8F51E2] opacity-50"></div>
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-[#8F51E2]/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-[#FFBC59]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- 1. GRID DE DADOS (KPIs) NO TOPO -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10 mb-8">
+                    <!-- Box 1 -->
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700 text-center hover:border-[#FFBC59] transition group cursor-pointer" onclick="toggleModal('modal-case-views')">
+                        <div class="text-[#FFBC59] text-2xl font-bold mb-1 group-hover:scale-110 transition inline-block">5.2M+</div>
+                        <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Total Views</div>
+                    </div>
+                    <!-- Box 2 -->
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700 text-center hover:border-[#00f2ea] transition group cursor-pointer" onclick="toggleModal('modal-case-views')">
+                        <div class="text-[#00f2ea] text-2xl font-bold mb-1 group-hover:scale-110 transition inline-block">97.5%</div>
+                        <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Tráfego Viral</div>
+                    </div>
+                    <!-- Box 3 -->
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700 text-center hover:border-pink-500 transition group cursor-pointer" onclick="toggleModal('modal-case-views')">
+                        <div class="text-pink-500 text-2xl font-bold mb-1 group-hover:scale-110 transition inline-block">63k+</div>
+                        <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Engajamento</div>
+                    </div>
+                    <!-- Box 4 -->
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700 text-center hover:border-green-500 transition group cursor-pointer" onclick="toggleModal('modal-case-views')">
+                        <div class="text-green-500 text-2xl font-bold mb-1 group-hover:scale-110 transition inline-block">7.1k+</div>
+                        <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Shares</div>
+                    </div>
+                </div>
+
+                <!-- 2. Texto de Introdução -->
+                <div class="max-w-4xl mx-auto text-center mb-10 relative z-10">
+                    <p class="text-slate-300 text-lg leading-relaxed">
+                        O mesmo conteúdo performou de forma orgânica no Instagram e dominou o For You do TikTok, alcançando mais de 5.2 milhões de visualizações combinadas.
+                    </p>
+                </div>
+
+                <!-- 3. Vídeos (Lado a Lado - ESTRUTURA BLINDADA) -->
+                <div class="flex flex-col lg:flex-row justify-center items-center gap-8 mb-12 relative z-10">
+                    
+                    <!-- Instagram Embed Container -->
+                    <div class="w-full max-w-[350px] flex flex-col items-center">
+                        <!-- Botão Estilizado (Padrão Público Alvo) -->
+                        <div class="px-6 py-2 rounded-full border border-slate-700 bg-slate-900/80 text-white font-bold text-sm tracking-wide mb-3 flex items-center gap-2 shadow-lg">
+                            <i class="fa-brands fa-instagram text-pink-500 text-lg"></i> 4.9 Milhões de Views
+                        </div>
+                        <div class="rounded-xl shadow-lg border border-slate-700 bg-white w-full">
+                             <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DQGK4C8jL_Q/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"></blockquote> 
+                        </div>
+                    </div>
+
+                    <!-- TikTok Embed Container -->
+                    <div class="w-full max-w-[350px] flex flex-col items-center">
+                        <!-- Botão Estilizado (Padrão Público Alvo) -->
+                        <div class="px-6 py-2 rounded-full border border-slate-700 bg-slate-900/80 text-white font-bold text-sm tracking-wide mb-3 flex items-center gap-2 shadow-lg">
+                            <i class="fa-brands fa-tiktok text-[#00f2ea] text-lg"></i> 97% Tráfego Viral
+                        </div>
+                        <div class="rounded-xl shadow-lg border border-slate-700 bg-white w-full">
+                            <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@meufamosofavorito/video/7563882246713675028" data-video-id="7563882246713675028" style="max-width: 100%; min-width: 100%;" > <section> <a target="_blank" title="@meufamosofavorito" href="https://www.tiktok.com/@meufamosofavorito?refer=embed">@meufamosofavorito</a> <p></p> </section> </blockquote> 
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 4. OPORTUNIDADES DE ATIVAÇÃO PARA A SEDE (INTEGRADO NO CASE) -->
+                <div class="max-w-4xl mx-auto relative z-10 mb-8">
+                    <div class="bg-gradient-to-r from-slate-900/90 to-slate-800/90 border border-slate-600 rounded-2xl p-6 text-center shadow-xl">
+                        <p class="text-[#FFBC59] font-bold mb-6 uppercase tracking-widest text-xs">
+                            <i class="fa-solid fa-rocket mr-2"></i> Como podemos ativar este resultado para a SEDE agora:
+                        </p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <!-- Opção 1 -->
+                            <div class="p-3 rounded-lg border border-slate-700/50 bg-slate-800/50 flex flex-col items-center justify-center hover:bg-slate-700 transition cursor-pointer group">
+                                <i class="fa-solid fa-handshake text-[#8F51E2] text-xl mb-2 group-hover:scale-110 transition"></i>
+                                <span class="text-xs text-white font-bold uppercase">Collab Feed</span>
+                                <span class="text-[9px] text-slate-400 mt-1">Sua marca co-autora</span>
+                            </div>
+                            <!-- Opção 2 -->
+                            <div class="p-3 rounded-lg border border-slate-700/50 bg-slate-800/50 flex flex-col items-center justify-center hover:bg-slate-700 transition cursor-pointer group">
+                                <i class="fa-solid fa-thumbtack text-pink-500 text-xl mb-2 group-hover:scale-110 transition"></i>
+                                <span class="text-xs text-white font-bold uppercase">Comentário Fixado</span>
+                                <span class="text-[9px] text-slate-400 mt-1">Topo do engajamento</span>
+                            </div>
+                            <!-- Opção 3 -->
+                            <div class="p-3 rounded-lg border border-slate-700/50 bg-slate-800/50 flex flex-col items-center justify-center hover:bg-slate-700 transition cursor-pointer group">
+                                <i class="fa-solid fa-star text-yellow-500 text-xl mb-2 group-hover:scale-110 transition"></i>
+                                <span class="text-xs text-white font-bold uppercase">Destaque Exclusivo</span>
+                                <span class="text-[9px] text-slate-400 mt-1">Stories permanentes</span>
+                            </div>
+                            <!-- Opção 4 -->
+                            <div class="p-3 rounded-lg border border-slate-700/50 bg-slate-800/50 flex flex-col items-center justify-center hover:bg-slate-700 transition cursor-pointer group">
+                                <i class="fa-solid fa-arrow-up text-blue-400 text-xl mb-2 group-hover:scale-110 transition"></i>
+                                <span class="text-xs text-white font-bold uppercase">Post Fixado</span>
+                                <span class="text-[9px] text-slate-400 mt-1">Primeiro do perfil</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Texto de Conclusão -->
+                <div class="max-w-3xl mx-auto text-center relative z-10">
+                    <p class="text-slate-300 text-sm italic">
+                        "Ao fechar um pacote, esses números podem trabalhar a favor da sua marca."
+                    </p>
+                </div>
+
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- 5. Sinergia com a Marca (PADRONIZADO) -->
+    <section id="sinergia" class="py-20 bg-slate-900 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-[#8F51E2]/10 rounded-full blur-3xl"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            
+             <!-- PADRONIZAÇÃO DO CABEÇALHO -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 text-[#FFBC59] font-bold mb-4 text-xs tracking-widest bg-[#FFBC59]/10 px-4 py-1.5 rounded-full border border-[#FFBC59]/20 uppercase">
+                    FIT CULTURAL
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                    Sinergia & <span class="text-[#FFBC59]">Comportamento</span>
+                </h2>
+                <p class="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto">
+                    Ao contrário do senso comum sobre páginas de entretenimento, nossa base não é adolescente. 
+                    Falamos com o <strong>Brasil economicamente ativo</strong>. Pessoas que trabalham, frequentam eventos e decidem a compra.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-[#8F51E2] transition duration-300 group text-center hover:-translate-y-2 shadow-xl">
+                    <div class="w-16 h-16 bg-[#8F51E2]/10 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-[#8F51E2] transition"><i class="fa-solid fa-bolt text-2xl text-[#8F51E2] group-hover:text-white"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Rotina & Energia</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Falamos com o público (25-45 anos) que busca performance, trabalho e energia para o dia a dia.</p>
+                </div>
+                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-[#FFBC59] transition duration-300 group text-center hover:-translate-y-2 shadow-xl">
+                    <div class="w-16 h-16 bg-[#FFBC59]/10 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-[#FFBC59] transition"><i class="fa-solid fa-music text-2xl text-[#FFBC59] group-hover:text-black"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Festas & Social</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">O ambiente de shows, eventos e bastidores é o "habitat natural" do nosso conteúdo e das melhores ocasiões de consumo.</p>
+                </div>
+                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-pink-500 transition duration-300 group text-center hover:-translate-y-2 shadow-xl">
+                    <div class="w-16 h-16 bg-pink-500/10 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-pink-500 transition"><i class="fa-solid fa-cart-shopping text-2xl text-pink-500 group-hover:text-white"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Consumo Imediato</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Classificados pelo algoritmo como "Shopping Enthusiasts". Um público aberto a novidades e compras por impulso.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Packages Section (NOVA ESTRUTURA: 3 PLANOS OBJETIVOS E VISUAL REFINADO - PADRONIZADO) -->
+    <section id="propostas" class="py-20 bg-slate-900">
+        <div class="container mx-auto px-6">
+            <!-- CABEÇALHO -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 text-[#8F51E2] font-bold mb-4 text-xs tracking-widest bg-[#8F51E2]/10 px-4 py-1.5 rounded-full border border-[#8F51E2]/20 uppercase">
+                    OPORTUNIDADES COMERCIAIS
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                    Formatos de <span class="text-[#8F51E2]">Parceria 2025</span>
+                </h2>
+                <p class="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto">
+                    Modelos simplificados para maximizar o impacto da sua marca em todas as nossas redes.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16 items-start">
+                
+                <!-- PLANO 1: BÁSICO -->
+                <div class="plan-card bg-slate-800 p-0 border border-green-500/30 overflow-hidden relative group">
+                    <div class="p-8 pb-4">
+                        <div class="flex justify-between items-start mb-4">
+                             <div class="inline-block bg-green-500/10 text-green-400 text-[10px] font-bold px-3 py-1 rounded border border-green-500/20">ENTRADA</div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-green-400 mb-1">Básico</h3>
+                        <p class="text-slate-400 text-sm font-medium">1 VÍDEO · 3 PLATAFORMAS</p>
+                    </div>
+                    <div class="px-8 pb-6 border-b border-slate-700"><span class="text-4xl font-bold text-white">R$ 6.000</span></div>
+                    <div class="p-8 flex-grow">
+                        <p class="text-xs text-slate-500 font-bold uppercase mb-4 tracking-wider">O QUE A MARCA RECEBE:</p>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i> <span><strong>1 Vídeo</strong></span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i> 
+                                <span>Publicação em: <br><span class="text-xs text-slate-400">Instagram (Reels), TikTok e YouTube Shorts</span></span>
+                            </li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i> <span>Opção de collab <span class="text-[10px] text-slate-500 block">(quando houver aceite da outra conta)</span></span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i> <span><strong>1 Story</strong> de apoio</span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i> <span>Menção da marca na legenda</span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i> <span>Comentário fixado com CTA</span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-400 mt-1"></i> <span>Distribuição simultânea nas 3 redes</span></li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0 mt-auto">
+                        <p class="text-[10px] text-slate-500 mb-4 text-center italic">Nota: Sem exclusividade.<br>"Simples, direto e eficiente."</p>
+                        <a href="https://wa.me/5512982745769?text=Olá,%20tenho%20interesse%20no%20Plano%20Básico" target="_blank" class="block w-full text-center bg-transparent border border-green-500 text-green-400 hover:bg-green-500 hover:text-white py-3 rounded-lg transition font-bold text-sm uppercase tracking-wide">Contratar Básico</a>
+                    </div>
+                </div>
+
+                <!-- PLANO 2: INTERMEDIÁRIO -->
+                <div class="plan-card featured bg-slate-800 p-0 overflow-hidden relative transform md:-translate-y-4 z-10">
+                    <div class="absolute top-0 w-full h-1 bg-[#FFBC59]"></div>
+                    <div class="p-8 pb-4">
+                        <div class="flex justify-between items-start mb-4">
+                             <div class="inline-block bg-[#FFBC59] text-black text-[10px] font-bold px-3 py-1 rounded shadow-lg">MAIS VENDIDO</div>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-1">Intermediário</h3>
+                        <p class="text-[#FFBC59] text-sm font-bold">2 VÍDEOS · EXCLUSIVIDADE</p>
+                    </div>
+                    <div class="px-8 pb-6 border-b border-slate-700/50"><span class="text-5xl font-bold text-white">R$ 25.000</span> <span class="text-sm text-slate-400">/mês</span></div>
+                    <div class="p-8 flex-grow">
+                        <p class="text-xs text-[#FFBC59] font-bold uppercase mb-4 tracking-wider">O QUE A MARCA RECEBE:</p>
+                        <ul class="space-y-3 text-sm text-white">
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#FFBC59] mt-1"></i> <span><strong>2 Vídeos</strong> por mês (Opção Collab)</span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#FFBC59] mt-1"></i> 
+                                <span>Publicação em: <br><span class="text-xs text-slate-300">Instagram (Reels), TikTok e YouTube Shorts</span></span>
+                            </li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#FFBC59] mt-1"></i> <span><strong>Co-criação editorial</strong> <span class="text-[10px] text-slate-400 block">(conteúdo pensado junto com a marca)</span></span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#FFBC59] mt-1"></i> <span>Opção de collab (quando houver fit)</span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#FFBC59] mt-1"></i> <span><strong>4 Stories</strong> de apoio <span class="text-[10px] text-slate-400 block">(1 por semana durante o mês)</span></span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#FFBC59] mt-1"></i> <span>Menção da marca nas legendas</span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#FFBC59] mt-1"></i> <span>Comentário fixado com CTA</span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#FFBC59] mt-1"></i> <span>Link na bio durante o período</span></li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#FFBC59] mt-1"></i> <span>Distribuição nas 3 redes</span></li>
+                            <li class="flex items-center gap-3 bg-[#FFBC59]/10 p-2 rounded -mx-2 text-[#FFBC59] font-bold"><i class="fa-solid fa-crown"></i> <span>Exclusividade de Categoria</span></li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0 mt-auto">
+                        <p class="text-[10px] text-slate-400 mb-2 text-center italic">"Aqui a marca não aparece uma vez — ela se estabelece."</p>
+                        <a href="https://wa.me/5512982745769?text=Olá,%20tenho%20interesse%20no%20Plano%20Intermediário%20com%20Exclusividade" target="_blank" class="block w-full text-center bg-[#FFBC59] hover:bg-yellow-400 text-black py-4 rounded-lg transition font-bold text-sm shadow-lg uppercase tracking-wide">Garantir Exclusividade</a>
+                    </div>
+                </div>
+
+                <!-- PLANO 3: SOB MEDIDA -->
+                <div class="plan-card bg-slate-800 p-0 border border-slate-600 overflow-hidden relative group">
+                    <div class="p-8 pb-4">
+                        <div class="flex justify-between items-start mb-4">
+                             <div class="inline-block bg-slate-200 text-slate-900 text-[10px] font-bold px-3 py-1 rounded">FLEXÍVEL</div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1">Sob Medida</h3>
+                        <p class="text-slate-400 text-sm font-medium">PROJETOS ESPECIAIS</p>
+                    </div>
+                    <div class="px-8 pb-6 border-b border-slate-700"><span class="text-3xl font-bold text-white">Sob Consulta</span></div>
+                    <div class="p-8 flex-grow">
+                         <p class="text-xs text-slate-500 font-bold uppercase mb-4 tracking-wider">ATIVOS DISPONÍVEIS:</p>
+                        <ul class="space-y-4 text-sm text-slate-300">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-camera text-[#8F51E2]"></i> Cobertura de Eventos</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-user-secret text-[#8F51E2]"></i> Bastidores de Influencers</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-handshake text-[#8F51E2]"></i> Collabs Estratégicas</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-layer-group text-[#8F51E2]"></i> Séries de Vídeos</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-calendar-star text-[#8F51E2]"></i> Datas Especiais</li>
+                             <li class="flex items-center gap-3"><i class="fa-solid fa-network-wired text-[#8F51E2]"></i> Projetos multiplataforma</li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0 mt-auto">
+                        <p class="text-[10px] text-slate-500 mb-4 text-center italic">"Tudo do seu jeito, conforme objetivo e volume."</p>
+                        <a href="https://wa.me/5512982745769?text=Olá,%20quero%20montar%20um%20projeto%20personalizado" target="_blank" class="block w-full text-center bg-transparent border border-white/50 text-white hover:bg-white hover:text-black py-3 rounded-lg transition font-bold text-sm uppercase tracking-wide">Montar Pacote</a>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- POR QUE INVESTIR -->
+            <div class="max-w-5xl mx-auto mt-16 bg-gradient-to-r from-slate-800 to-slate-900 border border-slate-700 rounded-3xl p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-[#8F51E2]/5 rounded-full blur-3xl"></div>
+                <h3 class="text-2xl font-bold text-white mb-6 text-center">Por que o <span class="text-[#8F51E2]">ROI</span> é diferente aqui?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <ul class="space-y-4">
+                        <li class="flex items-start"><div class="bg-[#8F51E2]/20 p-2 rounded-lg mr-4 mt-1"><i class="fa-solid fa-check text-[#8F51E2]"></i></div><div><h4 class="text-white font-bold">Alcance 100% Orgânico</h4><p class="text-slate-400 text-sm">Sem impulsionamento artificial. Audiência real e engajada.</p></div></li>
+                        <li class="flex items-start"><div class="bg-[#FFBC59]/20 p-2 rounded-lg mr-4 mt-1"><i class="fa-solid fa-play text-[#FFBC59]"></i></div><div><h4 class="text-white font-bold">Conteúdo Editorial</h4><p class="text-slate-400 text-sm">O público assiste porque gosta, não porque é obrigado.</p></div></li>
+                        <li class="flex items-start"><div class="bg-pink-500/20 p-2 rounded-lg mr-4 mt-1"><i class="fa-solid fa-share-nodes text-pink-500"></i></div><div><h4 class="text-white font-bold">Multiplataforma</h4><p class="text-slate-400 text-sm">Um único ativo distribuído em 3 redes, maximizando o impacto.</p></div></li>
+                    </ul>
+                    <div class="bg-slate-900/50 p-6 rounded-2xl border border-slate-600 text-center">
+                        <p class="text-slate-400 text-xs uppercase tracking-widest font-bold mb-2">Comparativo de Mercado</p>
+                        <p class="text-white text-lg font-light leading-relaxed">"O investimento mensal equivale a <strong class="text-[#FFBC59]">menos de um único post</strong> de uma celebridade média, mas com distribuição contínua em três plataformas."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contato" class="bg-black py-20 border-t border-slate-800">
+        <div class="container mx-auto px-6 text-center">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjr6mtVRXW53d-y4irEv7LL8sR2SRKLA0r1JKUlqviCqgx_lUZ4wlIsl4L0521kluUI7M4QtHjsUQlH7YMqNIqPYPmVWFQOKincmwsE-Hznqs5p-U3ZfOZhKr0UFqOMLWGUELoupTpw2QCUGBlDD-G46sP-RYJ35a1nH6Dx5WvTkskH_pTkAuqLImGc0Hk/s320/LOGO%20MEU%20FAMOSO%20FAVORITO.png" alt="Logo Rodapé" class="h-20 mx-auto mb-8 opacity-80 hover:opacity-100 transition duration-500">
+            <h2 class="text-3xl font-bold mb-8 text-white">Vamos fazer história juntos?</h2>
+            <div class="flex flex-col md:flex-row justify-center gap-6 mb-12">
+                <a href="mailto:meufamosofavorito@gmail.com" class="flex items-center justify-center bg-slate-800 hover:bg-slate-700 px-8 py-4 rounded-lg border border-slate-700 transition group text-white"><i class="fa-solid fa-envelope text-[#FFBC59] mr-3 group-hover:scale-110 transition"></i><span class="font-bold">meufamosofavorito@gmail.com</span></a>
+                <a href="https://wa.me/5512982745769" target="_blank" class="flex items-center justify-center bg-[#25D366] hover:bg-green-500 px-8 py-4 rounded-lg transition shadow-lg shadow-green-900/50"><i class="fa-brands fa-whatsapp text-white mr-3 text-xl"></i><span class="font-bold text-white">Chamar o Edu no WhatsApp</span></a>
+            </div>
+            <p class="text-xs text-slate-600">© 2025 Meu Famoso Favorito. Dados auditados.</p>
+        </div>
+    </footer>
+
+    <script async src="//www.instagram.com/embed.js"></script>
+    <script async src="https://www.tiktok.com/embed.js"></script>
+
+    <script>
+        function switchTab(tabId) {
+            const contents = ['insta', 'tiktok', 'yt'];
+            contents.forEach(c => {
+                const el = document.getElementById('content-' + c);
+                if(el) el.classList.add('hidden');
+            });
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(t => {
+                if(t) {
+                    t.classList.remove('active', 'bg-[#8F51E2]', 'text-white', 'border-[#8F51E2]');
+                    t.classList.add('border-slate-700');
+                }
+            });
+            const selectedContent = document.getElementById('content-' + tabId);
+            if(selectedContent) selectedContent.classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-' + tabId);
+            if(activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.classList.remove('border-slate-700');
+            }
+        }
+        function toggleModal(modalID){
+            const modal = document.getElementById(modalID);
+            if (!modal) return;
+            modal.classList.toggle('opacity-0');
+            modal.classList.toggle('pointer-events-none');
+            document.body.classList.toggle('modal-active');
+            if(window.instgrm) window.instgrm.Embeds.process();
+        }
+        const overlays = document.querySelectorAll('.modal-overlay');
+        overlays.forEach(overlay => {
+            overlay.addEventListener('click', function () {
+                const modal = this.parentElement;
+                if(modal) toggleModal(modal.id);
+            });
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if(targetElement){
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            switchTab('insta');
+        });
+    </script>
+    
+    <!-- Modais -->
+    <div id="modal-case-views" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[100]"><div class="modal-overlay absolute w-full h-full bg-black opacity-90"></div><div class="modal-container bg-slate-900 w-11/12 md:max-w-5xl mx-auto rounded-lg shadow-2xl z-[100] overflow-y-auto border border-yellow-500/30 max-h-[95vh]"><div class="modal-content py-4 text-left px-6"><div class="flex justify-between items-center pb-3 sticky top-0 bg-slate-900 z-10 border-b border-slate-700 mb-4"><p class="text-xl font-bold text-yellow-500">Performance Case SEDE</p><div class="modal-close cursor-pointer text-white hover:text-red-500 z-[101]" onclick="toggleModal('modal-case-views')"><i class="fa-solid fa-times text-3xl"></i></div></div><div class="bg-black rounded-lg p-2 flex justify-center items-center"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjXTiZTXSDgd-kmBwm0lqS0A5s_L9XMMOwEHZbZcf0zDxnwWzCKRomlPI42RwiHtXrYUyT8_GpGJcXuQfGlQapaVInlimTjLRBGpzj9q3bibnQqXJ-0X6ZCAX0wzAu5I9e88tZIEN_vBmrgQj_EIqPdfDHNmgo4fiOaMyslHwQGJWoTig4XLJ5Z67--d0Q/s16000/Sasha%20SEDE.jpeg" class="w-full h-auto rounded" alt="Print Case Sasha"></div></div></div></div>
+    <div id="modal-insta" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[100]"><div class="modal-overlay absolute w-full h-full bg-black opacity-90"></div><div class="modal-container bg-slate-900 w-11/12 md:max-w-5xl mx-auto rounded-lg shadow-2xl z-[100] overflow-y-auto border border-pink-500/30 max-h-[95vh]"><div class="modal-content py-4 text-left px-6"><div class="flex justify-between items-center pb-3 sticky top-0 bg-slate-900 z-10 border-b border-slate-700 mb-4"><p class="text-xl font-bold text-pink-500">Dados Instagram</p><div class="modal-close cursor-pointer text-white hover:text-red-500 z-[101]" onclick="toggleModal('modal-insta')"><i class="fa-solid fa-times text-3xl"></i></div></div><div class="bg-black rounded-lg p-2 flex justify-center items-center flex-col gap-2"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgw8vIxiCYpbfFK49T_QXp1TSVasyPeD4xITy3IomwiDx-jWz_MTtj2_fg2QZv8asqGrIWMV5S19Y4AEU8yl70q1HZXeM9DRRg_734pG-SSIdaEsTiUJnb-SJM_EUL4p1aVMF3CRR5ZZ1oSzH2h3wC1NQP66uzpELFMs1hFnX0AYDIb56_RE-JLJGMyED8/s16000/instagram%20ultimso%2030%20dias.png" class="w-full h-auto rounded" alt="Print Insta"></div></div></div></div>
+    <div id="modal-tiktok" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[100]"><div class="modal-overlay absolute w-full h-full bg-black opacity-90"></div><div class="modal-container bg-slate-900 w-11/12 md:max-w-5xl mx-auto rounded-lg shadow-2xl z-[100] overflow-y-auto border border-[#00f2ea]/30 max-h-[95vh]"><div class="modal-content py-4 text-left px-6"><div class="flex justify-between items-center pb-3 sticky top-0 bg-slate-900 z-10 border-b border-slate-700 mb-4"><p class="text-xl font-bold text-[#00f2ea]">Dados TikTok</p><div class="modal-close cursor-pointer text-white hover:text-red-500 z-[101]" onclick="toggleModal('modal-tiktok')"><i class="fa-solid fa-times text-3xl"></i></div></div><div class="bg-black rounded-lg p-2 flex justify-center items-center"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh16bw2qjdmXsp1YaxKodilfhiO4ODF5DaKUIWQdw9lbHyCiwoj8rRgxuFAot2-2D7Alnci5uMQcZ_kEIu-rP_z0pLV75uoeHh0_bRnHExFQdy7pg-HtNowPg3dGWUboL72NhzrTQo3FVrQPkruUwhMxZ8_mZmr_hNoaWUszKSJcda11Uc68Vb6T2nLJKE/s16000/tiktok%2028%20dias.png" class="w-full h-auto rounded" alt="Print TikTok"></div></div></div></div>
+    <div id="modal-yt" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[100]"><div class="modal-overlay absolute w-full h-full bg-black opacity-90"></div><div class="modal-container bg-slate-900 w-11/12 md:max-w-5xl mx-auto rounded-lg shadow-2xl z-[100] overflow-y-auto border border-red-600/30 max-h-[95vh]"><div class="modal-content py-4 text-left px-6"><div class="flex justify-between items-center pb-3 sticky top-0 bg-slate-900 z-10 border-b border-slate-700 mb-4"><p class="text-xl font-bold text-red-600">Dados YouTube</p><div class="modal-close cursor-pointer text-white hover:text-red-500 z-[101]" onclick="toggleModal('modal-yt')"><i class="fa-solid fa-times text-3xl"></i></div></div><div class="bg-black rounded-lg p-2 flex justify-center items-center"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhfyk2s2A9DfydJ64G7ttbPTiXknBSZEroJRggY3p51Oax-uWPt_3uv-EEA870UuYDIgqmTZ7DeQ55pz_kXMVucK_GZH2ySk3J3sZE-Lt_7TDF3MFEI-8ef9HE6eFfd0i4E6XmqXrUH6vcjVOVROlCHppnKWe7LuMj_bv3l0FDrDdry7-IyDNL23NmjN1c/s16000/Monetizac%CC%A7a%CC%83o%20no%20YouTube%20-%20YouTube%20Studio.jpg" class="w-full h-auto rounded" alt="Print YouTube"></div></div></div></div>
+    <div id="modal-vip-xuxa" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[100]"><div class="modal-overlay absolute w-full h-full bg-black opacity-90"></div><div class="modal-container bg-transparent w-full max-w-[360px] mx-auto z-[100] flex justify-center"><div class="relative w-full"><button onclick="toggleModal('modal-vip-xuxa')" class="absolute -top-10 right-0 text-white text-3xl hover:text-[#FFBC59] z-[101] bg-black/50 rounded-full w-10 h-10 flex items-center justify-center"><i class="fa-solid fa-times"></i></button><div class="rounded-xl overflow-hidden shadow-2xl border border-slate-700 bg-black"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DM3DVsrsju6/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="margin: 0; min-width: 100% !important;"></blockquote></div></div></div></div>
+    <div id="modal-vip-bruno" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[100]"><div class="modal-overlay absolute w-full h-full bg-black opacity-90"></div><div class="modal-container bg-transparent w-full max-w-[360px] mx-auto z-[100] flex justify-center"><div class="relative w-full"><button onclick="toggleModal('modal-vip-bruno')" class="absolute -top-10 right-0 text-white text-3xl hover:text-blue-500 z-[101] bg-black/50 rounded-full w-10 h-10 flex items-center justify-center"><i class="fa-solid fa-times"></i></button><div class="rounded-xl overflow-hidden shadow-2xl border border-slate-700 bg-black"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DSmrxnfgBdD/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="margin: 0; min-width: 100% !important;"></blockquote></div></div></div></div>
+    <div id="modal-vip-virginia" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[100]"><div class="modal-overlay absolute w-full h-full bg-black opacity-90"></div><div class="modal-container bg-transparent w-full max-w-[360px] mx-auto z-[100] flex justify-center"><div class="relative w-full"><button onclick="toggleModal('modal-vip-virginia')" class="absolute -top-10 right-0 text-white text-3xl hover:text-pink-500 z-[101] bg-black/50 rounded-full w-10 h-10 flex items-center justify-center"><i class="fa-solid fa-times"></i></button><div class="rounded-xl overflow-hidden shadow-2xl border border-slate-700 bg-black"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DJ7jEHSSAM3/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="margin: 0; min-width: 100% !important;"></blockquote></div></div></div></div>
+    <div id="modal-vip-sandy" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[100]"><div class="modal-overlay absolute w-full h-full bg-black opacity-90"></div><div class="modal-container bg-transparent w-full max-w-[360px] mx-auto z-[100] flex justify-center"><div class="relative w-full"><button onclick="toggleModal('modal-vip-sandy')" class="absolute -top-10 right-0 text-white text-3xl hover:text-[#FFBC59] z-[101] bg-black/50 rounded-full w-10 h-10 flex items-center justify-center"><i class="fa-solid fa-times"></i></button><div class="rounded-xl overflow-hidden shadow-2xl border border-slate-700 bg-black"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DJ5scuMtpug/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="margin: 0; min-width: 100% !important;"></blockquote></div></div></div></div>
+    
+    <script async src="//www.instagram.com/embed.js"></script>
+
+</body>
+</html>
